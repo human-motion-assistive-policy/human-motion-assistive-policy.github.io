@@ -159,32 +159,30 @@ Learning robot policies for physical caregiving assistance is challenging becaus
                         <br>
 
                         <p style="font-size: 125%">
-                            From a small set of motion-capture data, our framework generates diverse yet
-                            realistic human motions and turns them into deployable whole-body assistive
-                            policies through a three-stage, simulation-driven pipeline:
+                            From a small set of motion-capture clips, our simulation-driven pipeline
+                            generates diverse human motions, collects interaction demonstrations, and
+                            trains a deployable vision-based robot policy in three stages:
                         </p>
                         <div class="content" style="font-size: 125%">
                             <ol>
                                 <li>
                                     <b>Diverse Human Motion Generation.</b> A latent-conditioned,
-                                    physics-based human policy generates biomechanically plausible,
-                                    diverse motions during interaction, trained with an
-                                    <b>Adversarial Motion Prior (AMP)</b> for realism and a
-                                    latent-code diversity reward for behavioral variety.
+                                    physics-based human policy produces biomechanically plausible, diverse
+                                    motions, trained with an <b>Adversarial Motion Prior (AMP)</b> for
+                                    realism and a latent-code diversity reward for behavioral variety.
                                 </li>
                                 <li>
-                                    <b>Robot Interaction Demonstration Collection.</b> Treating the
-                                    frozen human policy as a cooperating care recipient, a
-                                    <b>human-adaptive scripted controller</b> collects demonstrations in
-                                    simulation. Randomizing the human latent, body scale, placement, and
-                                    furniture height yields interaction data spanning diverse poses,
-                                    styles, and configurations.
+                                    <b>Robot Interaction Demonstration Collection.</b> Treating the frozen
+                                    human policy as a cooperating care recipient, a <b>human-adaptive
+                                    scripted controller</b> collects demonstrations. Randomizing the latent
+                                    code, body scale, placement, and furniture height yields data spanning
+                                    diverse poses, styles, and configurations.
                                 </li>
                                 <li>
                                     <b>Vision-Based Robot Behavioral Cloning.</b> A <b>3D Diffusion
                                     Policy</b> maps a segmented human point cloud and robot proprioception
-                                    to delta joint actions. Using only deployable observations, it runs on
-                                    the physical robot with onboard RGB-D sensing alone.
+                                    to delta joint actions, running on the physical robot with onboard
+                                    RGB-D sensing alone.
                                 </li>
                             </ol>
                         </div>
