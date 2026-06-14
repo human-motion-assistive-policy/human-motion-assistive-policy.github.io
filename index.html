@@ -104,9 +104,9 @@
     <section class="section" style="padding-top: 0; padding-bottom: 1.5rem;">
         <div class="container is-fluid" style="padding-left: 1.5rem; padding-right: 1.5rem;">
             <div class="columns is-centered is-vcentered is-gapless">
-                <div class="column" style="padding-left: 0.5rem; padding-right: 0.5rem;">
+                <!-- <div class="column" style="padding-left: 0.5rem; padding-right: 0.5rem;">
                     <div class="content" style="display: flex; flex-direction: column; align-items: center;">
-                        <!-- TODO: place teaser video at videos/teaser-1.mp4 -->
+                        TODO: place teaser video at videos/teaser-1.mp4
                         <video autoplay controls muted loop playsinline width="100%" style="border-radius: 5px;">
                             <source src="videos/teaser-1.mp4" type="video/mp4">
                         </video>
@@ -114,7 +114,7 @@
                             Caption for the first teaser video.
                         </p>
                     </div>
-                </div>
+                </div> -->
                 <!-- <div class="column" style="padding-left: 0.5rem; padding-right: 0.5rem;">
                     <div class="content" style="display: flex; flex-direction: column; align-items: center;">
                         TODO: place teaser video at videos/teaser-2.mp4
@@ -147,28 +147,52 @@ Learning robot policies for physical caregiving assistance is challenging becaus
     </section>
 
     <!-- ===================== METHOD / OVERVIEW ===================== -->
-    <!-- <section class="section">
+    <section class="section">
         <div class="container is-max-widescreen">
             <div class="rows">
                 <div class="rows is-centered">
                     <div class="row is-full-width">
                         <h2 class="title is-3"><span class="dvima">Method Overview</span></h2>
 
-                        TODO: place overview figure at figs/overview.png
                         <img src="figs/overview.png" class="interpolation-image" alt="Method overview"
-                            style="display: block; margin-left: auto; margin-right: auto; max-width: 80%;" />
+                            style="display: block; margin-left: auto; margin-right: auto; max-width: 100%;" />
                         <br>
 
                         <p style="font-size: 125%">
-                            TODO: describe the system / figure.
-                            Overview of the proposed approach. Explain each component of the pipeline
-                            and how they fit together.
+                            From a small set of motion-capture data, our framework generates diverse yet
+                            realistic human motions and turns them into deployable whole-body assistive
+                            policies through a three-stage, simulation-driven pipeline:
                         </p>
+                        <div class="content" style="font-size: 125%">
+                            <ol>
+                                <li>
+                                    <b>Diverse Human Motion Generation.</b> A latent-conditioned,
+                                    physics-based human policy generates biomechanically plausible,
+                                    diverse motions during interaction, trained with an
+                                    <b>Adversarial Motion Prior (AMP)</b> for realism and a
+                                    latent-code diversity reward for behavioral variety.
+                                </li>
+                                <li>
+                                    <b>Robot Interaction Demonstration Collection.</b> Treating the
+                                    frozen human policy as a cooperating care recipient, a
+                                    <b>human-adaptive scripted controller</b> collects demonstrations in
+                                    simulation. Randomizing the human latent, body scale, placement, and
+                                    furniture height yields interaction data spanning diverse poses,
+                                    styles, and configurations.
+                                </li>
+                                <li>
+                                    <b>Vision-Based Robot Behavioral Cloning.</b> A <b>3D Diffusion
+                                    Policy</b> maps a segmented human point cloud and robot proprioception
+                                    to delta joint actions. Using only deployable observations, it runs on
+                                    the physical robot with onboard RGB-D sensing alone.
+                                </li>
+                            </ol>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </section> -->
+    </section>
 
     <!-- ===================== RESULTS / DEMO VIDEOS ===================== -->
     <section class="section">
@@ -180,51 +204,84 @@ Learning robot policies for physical caregiving assistance is challenging becaus
             </div>
             <br>
             <p style="font-size: 125%">
-                <!-- TODO: describe the experimental setup for these videos. -->
-                Description of the generated human motion.
+                The physics-based human policy produces motions that are both <b>realistic</b> and
+                <b>diverse</b> during physical interaction with the robot. We ablate its two
+                ingredients &mdash; AMP and latent conditioning.
             </p>
             <br>
+
+            <p style="font-size: 125%">
+                The policy trained with AMP produces realistic motions following the small set of motion capture data.
+            </p>
+            <br>
+
+
+            <div class="columns is-centered">
+                <div class="column">
+                    <div class="content" style="display: flex; flex-direction: column; align-items: center;">
+                        <video autoplay controls muted loop playsinline width="100%" style="border-radius: 5px;">
+                            <source src="videos/20260430_211713_sit2stand_amp_cut.mp4" type="video/mp4">
+                        </video>
+                        <p style="text-align: center; margin-top: 0.75rem; font-size: 130%; width: 100%;">
+                            <b>With AMP:</b> natural, whole-body coordinated motion.
+                        </p>
+                    </div>
+                </div>
+                <div class="column">
+                    <div class="content" style="display: flex; flex-direction: column; align-items: center;">
+                        <video autoplay controls muted loop playsinline width="100%" style="border-radius: 5px;">
+                            <source src="videos/20260501_005420_sit2stand_no_amp.mp4" type="video/mp4">
+                        </video>
+                        <p style="text-align: center; margin-top: 0.75rem; font-size: 130%; width: 100%;">
+                            <b>Without AMP:</b> unnatural motion.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <p style="font-size: 125%">
+                The human policy is conditioned on a latent variable, sampled once per episode from a normal distribution, which generates diverse yet temporally consistent motions.
+            </p>
             <br>
 
             <div class="columns is-centered">
                 <div class="column">
                     <div class="content" style="display: flex; flex-direction: column; align-items: center;">
                         <video autoplay controls muted loop playsinline width="100%" style="border-radius: 5px;">
-                            <source src="videos/result-1.mp4" type="video/mp4">
+                            <source src="videos/20260501_001225_sit2stand_div_variable_1.mp4" type="video/mp4">
                         </video>
                         <p style="text-align: center; margin-top: 0.75rem; font-size: 130%; width: 100%;">
-                            Result 1 caption.
+                            <b>Latent 1:</b> one natural way of standing up.
                         </p>
                     </div>
                 </div>
                 <div class="column">
                     <div class="content" style="display: flex; flex-direction: column; align-items: center;">
                         <video autoplay controls muted loop playsinline width="100%" style="border-radius: 5px;">
-                            <source src="videos/result-2.mp4" type="video/mp4">
+                            <source src="videos/20260501_001828_sit2stand_div_variable_2.mp4" type="video/mp4">
                         </video>
                         <p style="text-align: center; margin-top: 0.75rem; font-size: 130%; width: 100%;">
-                            Result 2 caption.
+                            <b>Latent 2:</b> a different, equally natural style.
                         </p>
                     </div>
                 </div>
             </div>
+
+            <br>
+
         </div>
     </section>
-
 
     <section class="section">
         <div class="container is-max-widescreen">
             <div class="rows is-centered">
                 <div class="row is-full-width">
-                    <h2 class="title is-3"><span class="dvima">Robot Policy Evaluation</span></h2>
+                    <h2 class="title is-3">Interaction Data Collection in Simulation<span class="dvima"></span></h2>
                 </div>
             </div>
             <br>
             <p style="font-size: 125%">
-                <!-- TODO: describe the experimental setup for these videos. -->
-                Description of the robot policy.
             </p>
-            <br>
             <br>
 
             <div class="columns is-centered">
@@ -234,7 +291,6 @@ Learning robot policies for physical caregiving assistance is challenging becaus
                             <source src="videos/result-1.mp4" type="video/mp4">
                         </video>
                         <p style="text-align: center; margin-top: 0.75rem; font-size: 130%; width: 100%;">
-                            Result 1 caption.
                         </p>
                     </div>
                 </div>
@@ -244,11 +300,47 @@ Learning robot policies for physical caregiving assistance is challenging becaus
                             <source src="videos/result-2.mp4" type="video/mp4">
                         </video>
                         <p style="text-align: center; margin-top: 0.75rem; font-size: 130%; width: 100%;">
-                            Result 2 caption.
                         </p>
                     </div>
                 </div>
             </div>
+
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container is-max-widescreen">
+            <div class="rows is-centered">
+                <div class="row is-full-width">
+                    <h2 class="title is-3">Robot Policy Evaluation<span class="dvima"></span></h2>
+                </div>
+            </div>
+            <br>
+            <p style="font-size: 125%">
+            </p>
+            <br>
+
+            <div class="columns is-centered">
+                <div class="column">
+                    <div class="content" style="display: flex; flex-direction: column; align-items: center;">
+                        <video autoplay controls muted loop playsinline width="100%" style="border-radius: 5px;">
+                            <source src="videos/result-1.mp4" type="video/mp4">
+                        </video>
+                        <p style="text-align: center; margin-top: 0.75rem; font-size: 130%; width: 100%;">
+                        </p>
+                    </div>
+                </div>
+                <div class="column">
+                    <div class="content" style="display: flex; flex-direction: column; align-items: center;">
+                        <video autoplay controls muted loop playsinline width="100%" style="border-radius: 5px;">
+                            <source src="videos/result-2.mp4" type="video/mp4">
+                        </video>
+                        <p style="text-align: center; margin-top: 0.75rem; font-size: 130%; width: 100%;">
+                        </p>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </section>
 
@@ -261,49 +353,27 @@ Learning robot policies for physical caregiving assistance is challenging becaus
             </div>
             <br>
             <p style="font-size: 125%">
-                <!-- TODO: describe the experimental setup for these videos. -->
-                Description of the real-world evaluation setup and tasks.
+                With <b>only six minutes of real-world demonstration data</b> for fine-tuning, the
+                simulation-trained policy performs preliminary <b>Sit-to-Stand</b> assistance on a
+                physical bimanual mobile robot, using only onboard RGB-D sensing and proprioception.
             </p>
-            <br>
             <br>
 
             <div class="columns is-centered">
                 <div class="column">
                     <div class="content" style="display: flex; flex-direction: column; align-items: center;">
                         <video autoplay controls muted loop playsinline width="100%" style="border-radius: 5px;">
-                            <source src="videos/result-1.mp4" type="video/mp4">
+                            <source src="videos/real-world-sit2stand-mosaic.mp4" type="video/mp4">
                         </video>
                         <p style="text-align: center; margin-top: 0.75rem; font-size: 130%; width: 100%;">
-                            Result 1 caption.
-                        </p>
-                    </div>
-                </div>
-                <div class="column">
-                    <div class="content" style="display: flex; flex-direction: column; align-items: center;">
-                        <video autoplay controls muted loop playsinline width="100%" style="border-radius: 5px;">
-                            <source src="videos/result-2.mp4" type="video/mp4">
-                        </video>
-                        <p style="text-align: center; margin-top: 0.75rem; font-size: 130%; width: 100%;">
-                            Result 2 caption.
+                            Real-world Sit-to-Stand assistance after lightweight fine-tuning on the
+                            physical assistive robot.
                         </p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-
-    <!-- ===================== BIBTEX ===================== -->
-    <!-- <section class="section" id="BibTeX">
-        <div class="container is-max-desktop content">
-            <h2 class="title is-3">BibTeX</h2>
-            <pre><code class="language-bibtex">@article{yourkey2026humanmotion,
-  title   = {Human Motion Assistive Policy},
-  author  = {Author One and Author Two and Author Three},
-  journal = {arXiv preprint arXiv:XXXX.XXXXX},
-  year    = {2026}
-}</code></pre>
-        </div>
-    </section> -->
 
     <!-- ===================== FOOTER ===================== -->
     <footer class="footer">
