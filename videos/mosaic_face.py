@@ -1,6 +1,10 @@
 import cv2
 import mediapipe as mp
 import argparse
+import os
+import shutil
+import subprocess
+import tempfile
 
 
 def mosaic_region(img, x, y, w, h, scale=0.06):
@@ -121,9 +125,12 @@ def process_video(input_path, output_path, mosaic_scale=0.06, margin_ratio=0.25)
     centers = fill_missing_centers(centers)
 
     # Pass 2: re-read and mosaic a fixed-size box around the (filled) center.
+    # OpenCV writes MPEG-4 Part 2 (mp4v), which browsers cannot play in <video>;
+    # write to a temp file and transcode to H.264 below.
     cap = cv2.VideoCapture(input_path)
+    tmp_path = tempfile.mktemp(suffix=".mp4")
     fourcc = cv2.VideoWriter_fourcc(*"mp4v")
-    writer = cv2.VideoWriter(output_path, fourcc, fps, (width, height))
+    writer = cv2.VideoWriter(tmp_path, fourcc, fps, (width, height))
 
     margin_w = box_w * margin_ratio
     margin_h = box_h * margin_ratio
@@ -154,6 +161,20 @@ def process_video(input_path, output_path, mosaic_scale=0.06, margin_ratio=0.25)
 
     cap.release()
     writer.release()
+
+    # Transcode to H.264 so the result plays in browsers (HTML5 <video>).
+    if shutil.which("ffmpeg"):
+        subprocess.run(
+            ["ffmpeg", "-y", "-loglevel", "error", "-i", tmp_path,
+             "-c:v", "libx264", "-pix_fmt", "yuv420p", "-crf", "20",
+             "-preset", "slow", "-an", "-movflags", "+faststart", output_path],
+            check=True,
+        )
+        os.remove(tmp_path)
+    else:
+        print("WARNING: ffmpeg not found; output is MPEG-4 Part 2 and will not "
+              "play in browsers. Install ffmpeg and re-run.")
+        shutil.move(tmp_path, output_path)
 
 
 if __name__ == "__main__":
