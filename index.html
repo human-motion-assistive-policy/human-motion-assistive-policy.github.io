@@ -254,31 +254,128 @@ Our framework uses a small set of motion-capture clips to generate diverse, phys
             </div>
             <br>
             <p style="font-size: 125%">
+                We collect robot demonstrations with a human-adaptive scripted controller under the
+                active human policy, then filter successful interaction rollouts as demonstration
+                data for robot policy learning.
             </p>
             <br>
 
-            <!-- TODO: add videos at videos/result-1.mp4 and videos/result-2.mp4
-            <div class="columns is-centered">
-                <div class="column">
-                    <div class="content" style="display: flex; flex-direction: column; align-items: center;">
-                        <video autoplay controls muted loop playsinline width="100%" style="border-radius: 5px;">
-                            <source src="videos/result-1.mp4" type="video/mp4">
-                        </video>
-                        <p style="text-align: center; margin-top: 0.75rem; font-size: 130%; width: 100%;">
-                        </p>
+            <div class="data-curation-flow">
+                <div class="data-curation-tasks">
+                    <div class="data-curation-task">
+                        <div class="data-curation-label">Sit-to-<br>Stand</div>
+                        <div class="data-curation-grid">
+                            <div class="data-curation-video" data-outcome="success">
+                                <video autoplay muted playsinline preload="metadata">
+                                    <source src="videos/data-curation/sts1_8s_web.mp4" type="video/mp4">
+                                </video>
+                                <img class="outcome-mark" src="static/images/data-curation/check_1@2x.png" alt="Success">
+                            </div>
+                            <div class="data-curation-video" data-outcome="success">
+                                <video autoplay muted playsinline preload="metadata">
+                                    <source src="videos/data-curation/sts2_8s_web.mp4" type="video/mp4">
+                                </video>
+                                <img class="outcome-mark" src="static/images/data-curation/check_1@2x.png" alt="Success">
+                            </div>
+                            <div class="data-curation-video" data-outcome="success">
+                                <video autoplay muted playsinline preload="metadata">
+                                    <source src="videos/data-curation/sts3_8s_web.mp4" type="video/mp4">
+                                </video>
+                                <img class="outcome-mark" src="static/images/data-curation/check_1@2x.png" alt="Success">
+                            </div>
+                            <div class="data-curation-video" data-outcome="success">
+                                <video autoplay muted playsinline preload="metadata">
+                                    <source src="videos/data-curation/sts4_8s_web.mp4" type="video/mp4">
+                                </video>
+                                <img class="outcome-mark" src="static/images/data-curation/check_1@2x.png" alt="Success">
+                            </div>
+                            <div class="data-curation-video" data-outcome="failure">
+                                <video autoplay muted playsinline preload="metadata">
+                                    <source src="videos/data-curation/sts5_8s_web.mp4" type="video/mp4">
+                                </video>
+                                <img class="outcome-mark" src="static/images/data-curation/check_2@2x.png" alt="Failure">
+                            </div>
+                            <div class="data-curation-video" data-outcome="success">
+                                <video autoplay muted playsinline preload="metadata">
+                                    <source src="videos/data-curation/sts6_8s_web.mp4" type="video/mp4">
+                                </video>
+                                <img class="outcome-mark" src="static/images/data-curation/check_1@2x.png" alt="Success">
+                            </div>
+                            <div class="data-curation-video" data-outcome="success">
+                                <video autoplay muted playsinline preload="metadata">
+                                    <source src="videos/data-curation/sts7_8s_web.mp4" type="video/mp4">
+                                </video>
+                                <img class="outcome-mark" src="static/images/data-curation/check_1@2x.png" alt="Success">
+                            </div>
+                            <div class="data-curation-video" data-outcome="success">
+                                <video autoplay muted playsinline preload="metadata">
+                                    <source src="videos/data-curation/sts8_8s_web.mp4" type="video/mp4">
+                                </video>
+                                <img class="outcome-mark" src="static/images/data-curation/check_1@2x.png" alt="Success">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="data-curation-task">
+                        <div class="data-curation-label">Lift-and-<br>Transfer</div>
+                        <div class="data-curation-grid">
+                            <div class="data-curation-video" data-outcome="success">
+                                <video autoplay muted playsinline preload="metadata">
+                                    <source src="videos/data-curation/lt1_8s_web.mp4" type="video/mp4">
+                                </video>
+                                <img class="outcome-mark" src="static/images/data-curation/check_1@2x.png" alt="Success">
+                            </div>
+                            <div class="data-curation-video" data-outcome="success">
+                                <video autoplay muted playsinline preload="metadata">
+                                    <source src="videos/data-curation/lt2_8s_web.mp4" type="video/mp4">
+                                </video>
+                                <img class="outcome-mark" src="static/images/data-curation/check_1@2x.png" alt="Success">
+                            </div>
+                            <div class="data-curation-video" data-outcome="success">
+                                <video autoplay muted playsinline preload="metadata">
+                                    <source src="videos/data-curation/lt3_8s_web.mp4" type="video/mp4">
+                                </video>
+                                <img class="outcome-mark" src="static/images/data-curation/check_1@2x.png" alt="Success">
+                            </div>
+                            <div class="data-curation-video" data-outcome="success">
+                                <video autoplay muted playsinline preload="metadata">
+                                    <source src="videos/data-curation/lt4_8s_web.mp4" type="video/mp4">
+                                </video>
+                                <img class="outcome-mark" src="static/images/data-curation/check_1@2x.png" alt="Success">
+                            </div>
+                            <div class="data-curation-video" data-outcome="success">
+                                <video autoplay muted playsinline preload="metadata">
+                                    <source src="videos/data-curation/lt5_8s_web.mp4" type="video/mp4">
+                                </video>
+                                <img class="outcome-mark" src="static/images/data-curation/check_1@2x.png" alt="Success">
+                            </div>
+                            <div class="data-curation-video" data-outcome="success">
+                                <video autoplay muted playsinline preload="metadata">
+                                    <source src="videos/data-curation/lt6_8s_web.mp4" type="video/mp4">
+                                </video>
+                                <img class="outcome-mark" src="static/images/data-curation/check_1@2x.png" alt="Success">
+                            </div>
+                            <div class="data-curation-video" data-outcome="success">
+                                <video autoplay muted playsinline preload="metadata">
+                                    <source src="videos/data-curation/lt7_8s_web.mp4" type="video/mp4">
+                                </video>
+                                <img class="outcome-mark" src="static/images/data-curation/check_1@2x.png" alt="Success">
+                            </div>
+                            <div class="data-curation-video" data-outcome="failure">
+                                <video autoplay muted playsinline preload="metadata">
+                                    <source src="videos/data-curation/lt8_8s_web.mp4" type="video/mp4">
+                                </video>
+                                <img class="outcome-mark" src="static/images/data-curation/check_2@2x.png" alt="Failure">
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="column">
-                    <div class="content" style="display: flex; flex-direction: column; align-items: center;">
-                        <video autoplay controls muted loop playsinline width="100%" style="border-radius: 5px;">
-                            <source src="videos/result-2.mp4" type="video/mp4">
-                        </video>
-                        <p style="text-align: center; margin-top: 0.75rem; font-size: 130%; width: 100%;">
-                        </p>
-                    </div>
+
+                <div class="data-curation-filter">
+                    <img src="static/images/data-curation/filter_save.png"
+                         alt="Filtering successful rollouts into saved robot demonstrations">
                 </div>
             </div>
-            -->
 
         </div>
     </section>
