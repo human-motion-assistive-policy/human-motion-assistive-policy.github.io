@@ -121,4 +121,88 @@ $(document).ready(function() {
         });
       });
     }
+
+    var policyComparisonVideos = Array.from(document.querySelectorAll(".policy-comparison-grid video"));
+    if (policyComparisonVideos.length) {
+      var policyComparisonRows = [];
+      for (var rowStart = 0; rowStart < policyComparisonVideos.length; rowStart += 2) {
+        policyComparisonRows.push(policyComparisonVideos.slice(rowStart, rowStart + 2));
+      }
+
+      var playTogether = function(rowVideos) {
+        rowVideos.forEach(function(video) {
+          video.loop = false;
+          video.currentTime = 0;
+        });
+        rowVideos.forEach(function(video) {
+          var playPromise = video.play();
+          if (playPromise && playPromise.catch) {
+            playPromise.catch(function() {});
+          }
+        });
+      };
+
+      policyComparisonRows.forEach(function(rowVideos) {
+        Promise.all(rowVideos.map(function(video) {
+          video.muted = true;
+          video.loop = false;
+          return new Promise(function(resolve) {
+            if (video.readyState >= 2) {
+              resolve();
+            } else {
+              video.addEventListener("loadeddata", resolve, { once: true });
+              video.addEventListener("error", resolve, { once: true });
+            }
+          });
+        })).then(function() {
+          playTogether(rowVideos);
+        });
+
+        rowVideos.forEach(function(video) {
+          video.addEventListener("ended", function() {
+            if (rowVideos.every(function(rowVideo) { return rowVideo.ended; })) {
+              window.setTimeout(function() {
+                playTogether(rowVideos);
+              }, 100);
+            }
+          });
+
+          video.addEventListener("timeupdate", function() {
+            var reference = rowVideos[0];
+            if (!reference || reference.paused || video === reference) {
+              return;
+            }
+            if (Math.abs(video.currentTime - reference.currentTime) > 0.2) {
+              video.currentTime = reference.currentTime;
+            }
+          });
+        });
+      });
+    }
+
+    var bodyScaleVideos = Array.from(document.querySelectorAll(".body-scale-grid video"));
+    if (bodyScaleVideos.length) {
+      bodyScaleVideos.forEach(function(video) {
+        var restartTimer = null;
+        var restartDelay = Number(video.getAttribute("data-restart-delay") || 2000);
+        video.loop = false;
+        video.muted = true;
+
+        var restartBodyScaleVideo = function() {
+          restartTimer = null;
+          video.currentTime = 0;
+          var playPromise = video.play();
+          if (playPromise && playPromise.catch) {
+            playPromise.catch(function() {});
+          }
+        };
+
+        video.addEventListener("ended", function() {
+          if (restartTimer) {
+            return;
+          }
+          restartTimer = window.setTimeout(restartBodyScaleVideo, restartDelay);
+        });
+      });
+    }
 })

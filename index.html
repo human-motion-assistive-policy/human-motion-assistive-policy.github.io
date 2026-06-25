@@ -388,32 +388,154 @@ Our framework uses a small set of motion-capture clips to generate diverse, phys
                 </div>
             </div>
             <br>
-            <p style="font-size: 125%">
-            </p>
-            <br>
+            <div class="policy-comparison-section">
+                <h3 class="title is-4 has-text-centered">Qualitative Comparison: Training Robot Policy with Mixed vs. Single Human Capability</h3>
+                <p class="policy-evaluation-lead">
+                    Human capability means the <strong>human torque limit</strong> in simulation. Here we
+                    <strong>compare robot policies trained with different human capability distributions</strong>:
+                    one uses mixed capabilities, with one higher and one lower value, while the other uses a single
+                    capability value. Both are evaluated on the same capability sweep.
+                </p>
+                <p class="policy-evaluation-lead">
+                    In each paired rollout, the human and robot placement, running human policy, human scale, and
+                    human capability are the same. The only difference is the <strong>robot policy</strong>.
+                </p>
+                <p class="policy-evaluation-lead">
+                    The rollouts below show that <strong>training with mixed human capabilities improves robustness
+                    and generalization</strong>: the mixed-capability policy succeeds where the single-capability
+                    policy fails.
+                </p>
 
-            <!-- TODO: add videos at videos/result-1.mp4 and videos/result-2.mp4
-            <div class="columns is-centered">
-                <div class="column">
-                    <div class="content" style="display: flex; flex-direction: column; align-items: center;">
-                        <video autoplay controls muted loop playsinline width="100%" style="border-radius: 5px;">
-                            <source src="videos/result-1.mp4" type="video/mp4">
+                <div class="policy-comparison-grid" aria-label="Qualitative robot policy comparison">
+                    <div class="policy-comparison-label">Trained with Mixed Human Capabilities</div>
+                    <div class="policy-comparison-label">Trained with Single Human Capability</div>
+
+                    <div class="policy-comparison-video is-success" data-policy="Trained with Mixed Human Capabilities">
+                        <video autoplay controls muted loop playsinline preload="metadata">
+                            <source src="videos/policy-comparison/config_0071_mixed.mp4" type="video/mp4">
                         </video>
-                        <p style="text-align: center; margin-top: 0.75rem; font-size: 130%; width: 100%;">
-                        </p>
+                    </div>
+                    <div class="policy-comparison-video is-failure" data-policy="Trained with Single Human Capability">
+                        <video autoplay controls muted loop playsinline preload="metadata">
+                            <source src="videos/policy-comparison/config_0071_unihigh.mp4" type="video/mp4">
+                        </video>
+                    </div>
+
+                    <div class="policy-comparison-video is-success" data-policy="Trained with Mixed Human Capabilities">
+                        <video autoplay controls muted loop playsinline preload="metadata">
+                            <source src="videos/policy-comparison/config_0052_mixed.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                    <div class="policy-comparison-video is-failure" data-policy="Trained with Single Human Capability">
+                        <video autoplay controls muted loop playsinline preload="metadata">
+                            <source src="videos/policy-comparison/config_0052_unihigh.mp4" type="video/mp4">
+                        </video>
+                    </div>
+
+                    <figure class="policy-comparison-item">
+                        <div class="policy-comparison-video is-success" data-policy="Trained with Mixed Human Capabilities">
+                            <video autoplay controls muted loop playsinline preload="metadata">
+                                <source src="videos/policy-comparison/config_0191_mixed.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                        <figcaption>
+                            The mixed-trained policy provides enough robot-arm lift to raise the human to an
+                            appropriate height.
+                        </figcaption>
+                    </figure>
+                    <figure class="policy-comparison-item">
+                        <div class="policy-comparison-video is-failure" data-policy="Trained with Single Human Capability">
+                            <video autoplay controls muted loop playsinline preload="metadata">
+                                <source src="videos/policy-comparison/config_0191_unihigh.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                        <figcaption>
+                            The single-capability policy provides insufficient lift and does not fully adapt to this
+                            human capability.
+                        </figcaption>
+                    </figure>
+                </div>
+            </div>
+
+            <div class="body-scale-section">
+                <h3 class="title is-4 has-text-centered">Generalization to Different Human Body Scales</h3>
+                <p class="policy-evaluation-lead">
+                    We further evaluate whether the learned robot policy can assist humans with different body
+                    scales. The successful rollouts below show the same mixed-capability-trained robot policy
+                    operating across smaller and nominal human body scales.
+                </p>
+
+                <div class="body-scale-group">
+                    <h4 class="body-scale-title">Human body scale: 0.88</h4>
+                    <div class="body-scale-grid" aria-label="Successful rollouts with human body scale 0.88">
+                        <figure class="body-scale-item">
+                            <video autoplay controls muted playsinline preload="metadata" data-restart-delay="0">
+                                <source src="videos/body-scale-generalization/scale_0.88_config_0155.mp4" type="video/mp4">
+                            </video>
+                        </figure>
+                        <figure class="body-scale-item">
+                            <video autoplay controls muted playsinline preload="metadata" data-restart-delay="0">
+                                <source src="videos/body-scale-generalization/scale_0.88_config_0157.mp4" type="video/mp4">
+                            </video>
+                        </figure>
+                        <figure class="body-scale-item">
+                            <video autoplay controls muted playsinline preload="metadata" data-restart-delay="0">
+                                <source src="videos/body-scale-generalization/scale_0.88_config_0199.mp4" type="video/mp4">
+                            </video>
+                        </figure>
                     </div>
                 </div>
-                <div class="column">
-                    <div class="content" style="display: flex; flex-direction: column; align-items: center;">
-                        <video autoplay controls muted loop playsinline width="100%" style="border-radius: 5px;">
-                            <source src="videos/result-2.mp4" type="video/mp4">
+
+                <div class="body-scale-group">
+                    <h4 class="body-scale-title">Human body scale: 1.0</h4>
+                    <div class="body-scale-grid" aria-label="Successful rollouts with human body scale 1.0">
+                        <figure class="body-scale-item">
+                            <video autoplay controls muted playsinline preload="metadata">
+                                <source src="videos/body-scale-generalization/scale_1.0_config_0071.mp4" type="video/mp4">
+                            </video>
+                        </figure>
+                        <figure class="body-scale-item">
+                            <video autoplay controls muted playsinline preload="metadata">
+                                <source src="videos/body-scale-generalization/scale_1.0_config_0197.mp4" type="video/mp4">
+                            </video>
+                        </figure>
+                        <figure class="body-scale-item">
+                            <video autoplay controls muted playsinline preload="metadata">
+                                <source src="videos/body-scale-generalization/scale_1.0_config_0475.mp4" type="video/mp4">
+                            </video>
+                        </figure>
+                    </div>
+                </div>
+            </div>
+
+            <div class="policy-evaluation-note">
+                <h3 class="title is-4 has-text-centered">Sanity Check: Human Motion Does Not Replace Robot Assistance</h3>
+                <p class="policy-evaluation-lead">
+                    We rule out a possible shortcut: whether the learned human policy is doing the task on its own,
+                    rather than requiring meaningful robot assistance. In these rollouts, the human policy is running
+                    as usual, but robot assistance is (partially) removed during Sit-to-Stand. The human does not complete the task
+                    independently, showing that <strong>successful rollouts require active robot assistance</strong>.
+                </p>
+
+                <div class="policy-evaluation-videos">
+                    <div class="policy-evaluation-video">
+                        <video autoplay controls muted loop playsinline>
+                            <source src="videos/not-standing-up-self/not_standing_up_on_its_own_1.mp4" type="video/mp4">
                         </video>
-                        <p style="text-align: center; margin-top: 0.75rem; font-size: 130%; width: 100%;">
+                        <p>
+                            The robot lifts briefly, then the human sits back down.
+                        </p>
+                    </div>
+                    <div class="policy-evaluation-video">
+                        <video autoplay controls muted loop playsinline>
+                            <source src="videos/not-standing-up-self/not_standing_up_on_its_own_2.mp4" type="video/mp4">
+                        </video>
+                        <p>
+                            The robot stops halfway, and the human remains there.
                         </p>
                     </div>
                 </div>
             </div>
-            -->
 
         </div>
     </section>

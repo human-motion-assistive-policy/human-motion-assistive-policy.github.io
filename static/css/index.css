@@ -280,6 +280,195 @@ body {
     display: block;
 }
 
+.policy-evaluation-note {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.1rem;
+}
+
+.policy-evaluation-lead {
+    max-width: 900px;
+    font-size: 125%;
+    text-align: center;
+    margin: 0;
+}
+
+.policy-evaluation-videos {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(260px, 360px));
+    gap: 1.25rem;
+    justify-content: center;
+    align-items: start;
+    width: 100%;
+}
+
+.policy-evaluation-video {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.policy-evaluation-video video {
+    width: 100%;
+    max-width: 360px;
+    border-radius: 5px;
+}
+
+.policy-evaluation-video p {
+    width: 100%;
+    max-width: 360px;
+    margin: 0.65rem 0 0;
+    text-align: center;
+    font-size: 105%;
+    line-height: 1.25;
+}
+
+.policy-evaluation-clarification {
+    max-width: 860px;
+    margin: 0;
+    text-align: center;
+    font-size: 110%;
+    line-height: 1.45;
+    color: #444;
+}
+
+.policy-comparison-section {
+    margin-top: 3rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.1rem;
+}
+
+.policy-comparison-section + .policy-evaluation-note {
+    margin-top: 3rem;
+}
+
+.policy-comparison-section + .body-scale-section {
+    margin-top: 3rem;
+}
+
+.body-scale-section {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.15rem;
+}
+
+.body-scale-section + .policy-evaluation-note {
+    margin-top: 3rem;
+}
+
+.body-scale-group {
+    width: 100%;
+    max-width: 1120px;
+}
+
+.body-scale-title {
+    margin: 0 0 0.65rem;
+    font-size: clamp(1rem, 1.25vw, 1.15rem);
+    font-weight: 700;
+    text-align: center;
+    color: #333;
+}
+
+.body-scale-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.75rem;
+}
+
+.body-scale-item {
+    margin: 0;
+}
+
+.body-scale-item video {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    display: block;
+    object-fit: cover;
+    background: #0b1620;
+    border-radius: 5px;
+}
+
+.body-scale-item figcaption {
+    margin-top: 0.4rem;
+    text-align: center;
+    font-size: 95%;
+    line-height: 1.25;
+    color: #444;
+}
+
+.policy-comparison-grid {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.75rem;
+    align-items: start;
+    max-width: 980px;
+}
+
+.policy-comparison-label {
+    font-weight: 600;
+    text-align: center;
+    color: #333;
+}
+
+.policy-comparison-label {
+    font-size: clamp(1rem, 1.4vw, 1.25rem);
+}
+
+.policy-comparison-video {
+    position: relative;
+    background: #0b1620;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.policy-comparison-video video {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    display: block;
+    object-fit: cover;
+}
+
+.policy-comparison-video::after {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    border-radius: 999px;
+    padding: 0.16rem 0.48rem;
+    font-size: clamp(0.68rem, 0.9vw, 0.78rem);
+    font-weight: 700;
+    line-height: 1.2;
+    color: #fff;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.22);
+}
+
+.policy-comparison-video.is-success::after {
+    content: "Success";
+    background: #20a558;
+}
+
+.policy-comparison-video.is-failure::after {
+    content: "Failure";
+    background: #c7463e;
+}
+
+.policy-comparison-item {
+    margin: 0;
+}
+
+.policy-comparison-item figcaption {
+    margin-top: 0.55rem;
+    text-align: center;
+    font-size: 105%;
+    line-height: 1.25;
+    color: #444;
+}
+
 @media screen and (max-width: 1023px) {
     .data-curation-flow {
         grid-template-columns: 1fr;
@@ -302,5 +491,39 @@ body {
 
     .data-curation-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .policy-evaluation-videos {
+        grid-template-columns: minmax(240px, 360px);
+    }
+
+    .policy-comparison-grid {
+        grid-template-columns: minmax(0, 1fr);
+        max-width: 520px;
+    }
+
+    .policy-comparison-label {
+        display: none;
+    }
+
+    .policy-comparison-video::before {
+        content: attr(data-policy);
+        display: block;
+        background: #f5f5f5;
+        color: #333;
+        font-weight: 600;
+        text-align: center;
+        padding: 0.35rem 0.5rem;
+        font-size: 1rem;
+    }
+
+    .body-scale-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media screen and (max-width: 520px) {
+    .body-scale-grid {
+        grid-template-columns: minmax(0, 1fr);
     }
 }
