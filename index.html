@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- TODO: page <title> shown in the browser tab -->
-    <title>Learning Robust Policies for Whole-Body Assistive Tasks via Diverse Physics-Based Human Motion Generation</title>
+    <title>Learning Robust Policies for Whole-Body Assistive Tasks via Dynamic Human Motion Generation</title>
 
     <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
 
@@ -39,7 +39,8 @@
 
                         <!-- TODO: full paper title -->
                         <h1 class="title is-1 publication-title">
-                            Learning Robust Policies for Whole-Body Assistive Tasks via Diverse Physics-Based Human Motion Generation
+                            Learning Robust Policies for Whole-Body<br>
+                            Assistive Tasks via Dynamic Human Motion Generation
                         </h1>
 
                         <!-- TODO: venue / submission status -->
@@ -138,7 +139,7 @@
                     <h2 class="title is-3">Abstract</h2>
                     <div class="content has-text-justified">
                         <p style="font-size: 125%">
-Learning robot policies for physical caregiving assistance is challenging because assistive tasks require close-contact, whole-body coordination with actively moving humans. Real-world data collection for such interactions is expensive and safety-critical, while existing simulation-based approaches often rely on quasi-static or minimally active human models that do not capture the diversity of real human behaviors. In this work, we present a simulation-driven framework for learning robust assistive robot policies through diverse physics-based human motion generation. We first train a latent-conditioned physics-based human policy with an adversarial motion prior to generate biomechanically plausible and diverse human motions during human-robot interaction. We then use these human motions to collect robot demonstrations with a human-adaptive scripted controller, producing interaction data that covers diverse human poses, motion styles, body scales, and relative human-robot configurations. Finally, we train a 3D diffusion policy from the curated demonstrations using segmented human point clouds and robot proprioception as deployable observations. Experiments on Sit-to-Stand and Lift-and-Transfer tasks show that our learned policy achieves strong simulation performance. Ablations further show that increasing human motion diversity improves downstream robot policy performance. We also demonstrate preliminary sim-to-real transfer on a physical assistive robot for Sit-to-Stand assistance after lightweight fine-tuning with a small amount of real-world data. These results suggest that diverse physics-based human motion generation is an effective path toward scalable learning of whole-body assistive robot policies.
+Learning robot policies for physical caregiving assistance is challenging because assistive tasks require close-contact, whole-body coordination with humans who dynamically move, balance, and exert interaction forces. Real-world data collection for such interactions is expensive and safety-critical, while existing simulation-based approaches often rely on quasi-static or minimally active human models that do not capture the dynamic nature of transfer assistance. In this work, we present a simulation-driven framework for learning robust whole-body assistive robot policies via dynamic human motion generation. We first train a physics-based human policy with an adversarial motion prior to generate biomechanically plausible human motions during physical human-robot interaction. The generated human acts as a dynamic simulated care recipient, allowing the robot to experience physically coupled interaction rather than assistance around a static human model. We then collect robot demonstrations in simulation with a human-adaptive scripted controller that conditions its assistance behavior on the current human state. Finally, we train a 3D diffusion policy from the curated demonstrations using segmented human point clouds and robot joint positions as deployable observations. Experiments on Sit-to-Stand and Lift-and-Transfer tasks show that the learned policy achieves strong simulation performance in close-contact assistive scenarios. We also demonstrate preliminary sim-to-real transfer on a physical assistive robot for Sit-to-Stand assistance after lightweight fine-tuning with a small amount of real-world data. These results suggest that dynamic human motion generation provides a scalable path toward learning robot policies for whole-body assistive tasks. Videos can be found on our anonymized <a href="https://human-motion-assistive-policy.github.io/">project website</a>.
                         </p>
                     </div>
                 </div>
@@ -155,10 +156,10 @@ Learning robot policies for physical caregiving assistance is challenging becaus
                         <h2 class="title is-3"><span class="dvima">Method Overview</span></h2>
 
                         <p style="font-size: 125%">
-Our framework uses a small set of motion-capture clips to generate diverse, physics-based human motions and collect human-robot interaction demonstrations across varied body scales, poses, motion styles, and environments. These demonstrations are then used to train a deployable vision-based robot policy that maps segmented human point clouds and robot proprioception to robot actions using 3D Diffusion Policy.
+Our training pipeline has three stages. First, we train a physics-based human policy with an Adversarial Motion Prior (AMP) and latent conditioning to generate <strong>dynamic physics-based human motions</strong> across varied human physical capabilities, body scales, poses, motion styles, and environments. Next, we simulate robot assistance with a human-adaptive scripted controller and curate successful interactions as robot demonstrations. Finally, we train a deployable assistive robot policy that maps segmented human point clouds and robot joint positions to robot delta joint actions.
                         </p>
 
-                        <img src="figs/overview.png" class="interpolation-image" alt="Method overview"
+                        <img src="figs/overview.png" class="interpolation-image" alt="Method pipeline figure"
                             style="display: block; margin-left: auto; margin-right: auto; max-width: 100%;" />
                         <br>
                     </div>
@@ -393,67 +394,97 @@ Our framework uses a small set of motion-capture clips to generate diverse, phys
                 <p class="policy-evaluation-lead">
                     Human capability means the <strong>human torque limit</strong> in simulation. Here we
                     <strong>compare robot policies trained with different human capability distributions</strong>:
-                    one uses mixed capabilities, with one higher and one lower value, while the other uses a single
-                    capability value. Both are evaluated on the same capability sweep.
+                    one uses mixed capabilities, with both 1.0x and 0.25x humans, while the others use a single
+                    human capability.
                 </p>
                 <p class="policy-evaluation-lead">
                     In each paired rollout, the human and robot placement, running human policy, human scale, and
                     human capability are the same. The only difference is the <strong>robot policy</strong>.
                 </p>
                 <p class="policy-evaluation-lead">
-                    The rollouts below show that <strong>training with mixed human capabilities improves robustness
-                    and generalization</strong>: the mixed-capability policy succeeds where the single-capability
-                    policy fails.
+                    The rollouts below show that <strong>training with mixed human capabilities improves robustness</strong>:
+                    mixed-capability training better adapts to the evaluated interactions and produces successful
+                    assistance in cases where single-capability training fails.
                 </p>
 
-                <div class="policy-comparison-grid" aria-label="Qualitative robot policy comparison">
-                    <div class="policy-comparison-label">Trained with Mixed Human Capabilities</div>
-                    <div class="policy-comparison-label">Trained with Single Human Capability</div>
+                <div class="policy-comparison-group">
+                    <div class="policy-comparison-grid" aria-label="Mixed capability policy versus single 1.0x capability policy">
+                        <div class="policy-comparison-label">Trained with Mixed (1.0x / 0.25x) Human Capabilities</div>
+                        <div class="policy-comparison-label">Trained with Single (1.0x) Human Capability</div>
 
-                    <div class="policy-comparison-video is-success" data-policy="Trained with Mixed Human Capabilities">
-                        <video autoplay controls muted loop playsinline preload="metadata">
-                            <source src="videos/policy-comparison/config_0071_mixed.mp4" type="video/mp4">
-                        </video>
-                    </div>
-                    <div class="policy-comparison-video is-failure" data-policy="Trained with Single Human Capability">
-                        <video autoplay controls muted loop playsinline preload="metadata">
-                            <source src="videos/policy-comparison/config_0071_unihigh.mp4" type="video/mp4">
-                        </video>
-                    </div>
-
-                    <div class="policy-comparison-video is-success" data-policy="Trained with Mixed Human Capabilities">
-                        <video autoplay controls muted loop playsinline preload="metadata">
-                            <source src="videos/policy-comparison/config_0052_mixed.mp4" type="video/mp4">
-                        </video>
-                    </div>
-                    <div class="policy-comparison-video is-failure" data-policy="Trained with Single Human Capability">
-                        <video autoplay controls muted loop playsinline preload="metadata">
-                            <source src="videos/policy-comparison/config_0052_unihigh.mp4" type="video/mp4">
-                        </video>
-                    </div>
-
-                    <figure class="policy-comparison-item">
-                        <div class="policy-comparison-video is-success" data-policy="Trained with Mixed Human Capabilities">
+                        <div class="policy-comparison-video is-success" data-policy="Trained with Mixed (1.0x / 0.25x) Human Capabilities">
                             <video autoplay controls muted loop playsinline preload="metadata">
-                                <source src="videos/policy-comparison/config_0191_mixed.mp4" type="video/mp4">
+                                <source src="videos/policy-comparison/q2_config_0032_mixed_15p0s_freeze2p5s.mp4" type="video/mp4">
                             </video>
                         </div>
-                        <figcaption>
-                            The mixed-trained policy provides enough robot-arm lift to raise the human to an
-                            appropriate height.
-                        </figcaption>
-                    </figure>
-                    <figure class="policy-comparison-item">
-                        <div class="policy-comparison-video is-failure" data-policy="Trained with Single Human Capability">
+                        <div class="policy-comparison-video is-failure" data-policy="Trained with Single (1.0x) Human Capability">
                             <video autoplay controls muted loop playsinline preload="metadata">
-                                <source src="videos/policy-comparison/config_0191_unihigh.mp4" type="video/mp4">
+                                <source src="videos/policy-comparison/q2_config_0032_unihigh_15p0s_freeze2p5s.mp4" type="video/mp4">
                             </video>
                         </div>
-                        <figcaption>
-                            The single-capability policy provides insufficient lift and does not fully adapt to this
-                            human capability.
-                        </figcaption>
-                    </figure>
+
+                        <div class="policy-comparison-video is-success" data-policy="Trained with Mixed (1.0x / 0.25x) Human Capabilities">
+                            <video autoplay controls muted loop playsinline preload="metadata">
+                                <source src="videos/policy-comparison/q2_config_0039_mixed_15p0s_freeze2p5s.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                        <div class="policy-comparison-video is-failure" data-policy="Trained with Single (1.0x) Human Capability">
+                            <video autoplay controls muted loop playsinline preload="metadata">
+                                <source src="videos/policy-comparison/q2_config_0039_unihigh_15p0s_freeze2p5s.mp4" type="video/mp4">
+                            </video>
+                        </div>
+
+                        <div class="policy-comparison-video is-success" data-policy="Trained with Mixed (1.0x / 0.25x) Human Capabilities">
+                            <video autoplay controls muted loop playsinline preload="metadata">
+                                <source src="videos/policy-comparison/q2_config_0052_mixed_15p0s_freeze2p5s.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                        <div class="policy-comparison-video is-failure" data-policy="Trained with Single (1.0x) Human Capability">
+                            <video autoplay controls muted loop playsinline preload="metadata">
+                                <source src="videos/policy-comparison/q2_config_0052_unihigh_15p0s_freeze2p5s.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="policy-comparison-group">
+                    <div class="policy-comparison-grid" aria-label="Mixed capability policy versus single 0.25x capability policy">
+                        <div class="policy-comparison-label">Trained with Mixed (1.0x / 0.25x) Human Capabilities</div>
+                        <div class="policy-comparison-label">Trained with Single (0.25x) Human Capability</div>
+
+                        <div class="policy-comparison-video is-success" data-policy="Trained with Mixed (1.0x / 0.25x) Human Capabilities">
+                            <video autoplay controls muted loop playsinline preload="metadata">
+                                <source src="videos/policy-comparison/q2_config_0422_mixed_14p0s_freeze4p5s.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                        <div class="policy-comparison-video is-failure" data-policy="Trained with Single (0.25x) Human Capability">
+                            <video autoplay controls muted loop playsinline preload="metadata">
+                                <source src="videos/policy-comparison/q2_config_0422_unilow_16p0s_freeze2p5s.mp4" type="video/mp4">
+                            </video>
+                        </div>
+
+                        <div class="policy-comparison-video is-success" data-policy="Trained with Mixed (1.0x / 0.25x) Human Capabilities">
+                            <video autoplay controls muted loop playsinline preload="metadata">
+                                <source src="videos/policy-comparison/q2_config_0235_mixed_14p0s_freeze4p5s.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                        <div class="policy-comparison-video is-failure" data-policy="Trained with Single (0.25x) Human Capability">
+                            <video autoplay controls muted loop playsinline preload="metadata">
+                                <source src="videos/policy-comparison/q2_config_0235_unilow_16p0s_freeze2p5s.mp4" type="video/mp4">
+                            </video>
+                        </div>
+
+                        <div class="policy-comparison-video is-success" data-policy="Trained with Mixed (1.0x / 0.25x) Human Capabilities">
+                            <video autoplay controls muted loop playsinline preload="metadata">
+                                <source src="videos/policy-comparison/q2_config_0323_mixed_18p0s_freeze2p5s.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                        <div class="policy-comparison-video is-failure" data-policy="Trained with Single (0.25x) Human Capability">
+                            <video autoplay controls muted loop playsinline preload="metadata">
+                                <source src="videos/policy-comparison/q2_config_0323_unilow_18p0s_freeze2p5s.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                    </div>
                 </div>
             </div>
 

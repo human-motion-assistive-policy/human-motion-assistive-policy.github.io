@@ -349,6 +349,27 @@ body {
     margin-top: 3rem;
 }
 
+.policy-comparison-group {
+    width: 100%;
+    max-width: 980px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+}
+
+.policy-comparison-group + .policy-comparison-group {
+    margin-top: 1.4rem;
+}
+
+.policy-comparison-caption {
+    max-width: 860px;
+    margin: 0 auto;
+    text-align: center;
+    font-size: 110%;
+    line-height: 1.35;
+    color: #444;
+}
+
 .body-scale-section {
     width: 100%;
     display: flex;
