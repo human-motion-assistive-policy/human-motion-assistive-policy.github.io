@@ -403,8 +403,8 @@ Our training pipeline has three stages. First, we train a physics-based human po
                 </p>
                 <p class="policy-evaluation-lead">
                     The rollouts below show that <strong>training with mixed human capabilities improves robustness</strong>:
-                    mixed-capability training better adapts to the evaluated interactions and produces successful
-                    assistance in cases where single-capability training fails.
+                    compared with policies trained only with 1.0x- or 0.25x-capability humans, mixed-capability
+                    training better adapts to the evaluated interactions and produces successful assistance.
                 </p>
 
                 <div class="policy-comparison-group">
@@ -454,6 +454,17 @@ Our training pipeline has three stages. First, we train a physics-based human po
 
                         <div class="policy-comparison-video is-success" data-policy="Trained with Mixed (1.0x / 0.25x) Human Capabilities">
                             <video autoplay controls muted loop playsinline preload="metadata">
+                                <source src="videos/policy-comparison/q2_config_0323_mixed_18p0s_freeze2p5s.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                        <div class="policy-comparison-video is-failure" data-policy="Trained with Single (0.25x) Human Capability">
+                            <video autoplay controls muted loop playsinline preload="metadata">
+                                <source src="videos/policy-comparison/q2_config_0323_unilow_18p0s_freeze2p5s.mp4" type="video/mp4">
+                            </video>
+                        </div>
+
+                        <div class="policy-comparison-video is-success" data-policy="Trained with Mixed (1.0x / 0.25x) Human Capabilities">
+                            <video autoplay controls muted loop playsinline preload="metadata">
                                 <source src="videos/policy-comparison/q2_config_0422_mixed_14p0s_freeze4p5s.mp4" type="video/mp4">
                             </video>
                         </div>
@@ -473,17 +484,6 @@ Our training pipeline has three stages. First, we train a physics-based human po
                                 <source src="videos/policy-comparison/q2_config_0235_unilow_16p0s_freeze2p5s.mp4" type="video/mp4">
                             </video>
                         </div>
-
-                        <div class="policy-comparison-video is-success" data-policy="Trained with Mixed (1.0x / 0.25x) Human Capabilities">
-                            <video autoplay controls muted loop playsinline preload="metadata">
-                                <source src="videos/policy-comparison/q2_config_0323_mixed_18p0s_freeze2p5s.mp4" type="video/mp4">
-                            </video>
-                        </div>
-                        <div class="policy-comparison-video is-failure" data-policy="Trained with Single (0.25x) Human Capability">
-                            <video autoplay controls muted loop playsinline preload="metadata">
-                                <source src="videos/policy-comparison/q2_config_0323_unilow_18p0s_freeze2p5s.mp4" type="video/mp4">
-                            </video>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -493,12 +493,13 @@ Our training pipeline has three stages. First, we train a physics-based human po
                 <p class="policy-evaluation-lead">
                     We further evaluate whether the learned robot policy can assist humans with different body
                     scales. The successful rollouts below show the same mixed-capability-trained robot policy
-                    operating across smaller and nominal human body scales.
+                    operating across smaller and nominal human body scales on both assistive tasks.
                 </p>
 
                 <div class="body-scale-group">
                     <h4 class="body-scale-title">Human body scale: 0.88</h4>
-                    <div class="body-scale-grid" aria-label="Successful rollouts with human body scale 0.88">
+                    <h5 class="body-scale-task-title">Sit-to-Stand</h5>
+                    <div class="body-scale-grid" aria-label="Successful Sit-to-Stand rollouts with human body scale 0.88">
                         <figure class="body-scale-item">
                             <video autoplay controls muted playsinline preload="metadata" data-restart-delay="0">
                                 <source src="videos/body-scale-generalization/scale_0.88_config_0155.mp4" type="video/mp4">
@@ -515,11 +516,30 @@ Our training pipeline has three stages. First, we train a physics-based human po
                             </video>
                         </figure>
                     </div>
+                    <h5 class="body-scale-task-title">Lift-and-Transfer</h5>
+                    <div class="body-scale-grid" aria-label="Successful Lift-and-Transfer rollouts with human body scale 0.88">
+                        <figure class="body-scale-item">
+                            <video autoplay controls muted loop playsinline preload="metadata">
+                                <source src="videos/body-scale-generalization/scale_0.88_lt_01.mp4" type="video/mp4">
+                            </video>
+                        </figure>
+                        <figure class="body-scale-item">
+                            <video autoplay controls muted loop playsinline preload="metadata">
+                                <source src="videos/body-scale-generalization/scale_0.88_lt_02.mp4" type="video/mp4">
+                            </video>
+                        </figure>
+                        <figure class="body-scale-item">
+                            <video autoplay controls muted loop playsinline preload="metadata">
+                                <source src="videos/body-scale-generalization/scale_0.88_lt_03.mp4" type="video/mp4">
+                            </video>
+                        </figure>
+                    </div>
                 </div>
 
                 <div class="body-scale-group">
                     <h4 class="body-scale-title">Human body scale: 1.0</h4>
-                    <div class="body-scale-grid" aria-label="Successful rollouts with human body scale 1.0">
+                    <h5 class="body-scale-task-title">Sit-to-Stand</h5>
+                    <div class="body-scale-grid" aria-label="Successful Sit-to-Stand rollouts with human body scale 1.0">
                         <figure class="body-scale-item">
                             <video autoplay controls muted playsinline preload="metadata">
                                 <source src="videos/body-scale-generalization/scale_1.0_config_0071.mp4" type="video/mp4">
@@ -533,6 +553,24 @@ Our training pipeline has three stages. First, we train a physics-based human po
                         <figure class="body-scale-item">
                             <video autoplay controls muted playsinline preload="metadata">
                                 <source src="videos/body-scale-generalization/scale_1.0_config_0475.mp4" type="video/mp4">
+                            </video>
+                        </figure>
+                    </div>
+                    <h5 class="body-scale-task-title">Lift-and-Transfer</h5>
+                    <div class="body-scale-grid" aria-label="Successful Lift-and-Transfer rollouts with human body scale 1.0">
+                        <figure class="body-scale-item">
+                            <video autoplay controls muted loop playsinline preload="metadata">
+                                <source src="videos/body-scale-generalization/scale_1.0_lt_01.mp4" type="video/mp4">
+                            </video>
+                        </figure>
+                        <figure class="body-scale-item">
+                            <video autoplay controls muted loop playsinline preload="metadata">
+                                <source src="videos/body-scale-generalization/scale_1.0_lt_02.mp4" type="video/mp4">
+                            </video>
+                        </figure>
+                        <figure class="body-scale-item">
+                            <video autoplay controls muted loop playsinline preload="metadata">
+                                <source src="videos/body-scale-generalization/scale_1.0_lt_03.mp4" type="video/mp4">
                             </video>
                         </figure>
                     </div>

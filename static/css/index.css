@@ -361,15 +361,6 @@ body {
     margin-top: 1.4rem;
 }
 
-.policy-comparison-caption {
-    max-width: 860px;
-    margin: 0 auto;
-    text-align: center;
-    font-size: 110%;
-    line-height: 1.35;
-    color: #444;
-}
-
 .body-scale-section {
     width: 100%;
     display: flex;
@@ -393,6 +384,14 @@ body {
     font-weight: 700;
     text-align: center;
     color: #333;
+}
+
+.body-scale-task-title {
+    margin: 0.85rem 0 0.5rem;
+    font-size: clamp(0.92rem, 1.1vw, 1.05rem);
+    font-weight: 600;
+    text-align: center;
+    color: #444;
 }
 
 .body-scale-grid {
@@ -424,6 +423,7 @@ body {
 
 .policy-comparison-grid {
     width: 100%;
+    margin: 0 auto;
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 0.75rem;
@@ -541,6 +541,7 @@ body {
     .body-scale-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
+
 }
 
 @media screen and (max-width: 520px) {
